@@ -23,17 +23,19 @@ const io = new Server(server, {
 app.use(cors());
 app.use(express.json());
 
-const PORT = 3000 || process.env.PORT;
+const PORT =  process.env.PORT || 3000 ;
 
 //MongoDB Connection
 dbConnection();
+
+io.listen(server);
 
 //webSocket Logic (for Real-time Chess)
 
 initializeSocket(io);
 
 app.use("/api", aiRoutes);
-app.use("api/game", gameRoutes);
+app.use("/api/game", gameRoutes);
 app.use("/api/user", userRoutes);
 
-app.listen(PORT, () => console.log(`server is running on port ${PORT}`));
+server.listen(PORT, () => console.log(`server is running on port ${PORT}`));
